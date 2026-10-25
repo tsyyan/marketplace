@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../schemas/mcp.schema.json",
+  "id": "buddie",
+  "type": "mcp",
+  "name": "Buddie",
+  "tagline": "Check agent reports: quotes against their sources, repo, PR and CI claims against git and GitHub",
+  "description": "Buddie checks supported quotations and repository/GitHub claims against primary evidence, without a model in the check. It returns receipts that identify failed and unchecked claims. Its environment tool observes only the local categories the person has granted. It runs locally over MCP stdio; no Buddie account or hosted endpoint is required.\n\nTools: `verify_report` (checks quotations, numbers in cited sentences and explicit evidence anchors; reports failures and gaps without certifying the whole response), `snap` (fetches public URLs and stores content-addressed snapshots locally), `source_text` (reads stored snapshot text), `summary` (needs the Claude Code hook journal; little data elsewhere) and `environment_snapshot` (observes granted local categories; the call itself grants nothing).\n\nInstalling the MCP server does not gate Cline's answers: automatic answer gating is a separate Claude Code or Codex hook integration.",
+  "author": {
+    "name": "tsyyan",
+    "url": "https://github.com/tsyyan"
+  },
+  "homepage": "https://github.com/tsyyan/buddie",
+  "repo": "https://github.com/tsyyan/buddie",
+  "icon": "./icon.png",
+  "tags": ["software", "research"],
+  "license": "Apache-2.0",
+  "verified": false,
+  "featured": false,
+  "install": {
+    "args": ["buddie", "--", "uvx", "--from", "buddie@2.0.0", "python", "-X", "utf8", "-m", "buddie", "serve"],
+    "env": [
+      {
+        "name": "BUDDIE_GITHUB_TOKEN",
+        "required": false,
+        "description": "Optional GitHub token for pr: and ci: anchors (private repositories, higher rate limit). Buddie never reads an ambient GITHUB_TOKEN.",
+        "url": "https://github.com/settings/personal-access-tokens"
+      }
+    ],
+    "notes": "Requires uv and Python 3.11 or newer. `-X utf8` keeps MCP input UTF-8 on Windows systems whose code page is not UTF-8. `snap` and `verify_report` fetch the URLs a report cites and write snapshots to ./.verbatim (or $VERBATIM_STORE). Privacy: https://github.com/tsyyan/buddie/blob/v2.0.0/PRIVACY.md"
+  }
+}
