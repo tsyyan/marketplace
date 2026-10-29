@@ -2,9 +2,9 @@
   "$schema": "../../../schemas/mcp.schema.json",
   "id": "buddie",
   "type": "mcp",
-  "name": "Buddie",
-  "tagline": "Check agent reports: quotes against their sources, repo, PR and CI claims against git and GitHub",
-  "description": "Buddie checks supported quotations and repository/GitHub claims against primary evidence, without a model in the check. It returns receipts that identify failed and unchecked claims. Its environment tool observes only the local categories the person has granted. It runs locally over MCP stdio; no Buddie account or hosted endpoint is required.\n\nTools: `verify_report` (checks quotations, numbers in cited sentences and explicit evidence anchors; reports failures and gaps without certifying the whole response), `snap` (fetches public URLs and stores content-addressed snapshots locally), `source_text` (reads stored snapshot text), `summary` (needs the Claude Code hook journal; little data elsewhere) and `environment_snapshot` (observes granted local categories; the call itself grants nothing).\n\nInstalling the MCP server does not gate Cline's answers: automatic answer gating is a separate Claude Code or Codex hook integration.",
+  "name": "buddie",
+  "tagline": "Checks AI agents' claims against primary evidence, with no model; observes only what you grant.",
+  "description": "buddie checks supported quotations, cited numbers and repository/GitHub claims against primary evidence, without a model in the check. It returns receipts naming failures and what could not be checked. Its environment tool observes only categories the person granted. It runs locally over MCP stdio; no buddie account or hosted endpoint is required.\n\nEight tools: verify_report, snap, source_text, summary, environment_snapshot, feedback_start, feedback_resolve and feedback_accept. verify_report and snap may fetch evidence and write local snapshots; feedback_start and feedback_resolve also write local feedback-chain state. feedback_accept reads the chain and checks that the final report is exactly its verified text. summary needs the Claude Code hook journal. PASS covers only supported checks that ran; GAPS and EMPTY are not passes.\n\nInstalling this MCP server does not gate Cline answers. The separate Claude Code/Codex plugins check supported claims at Stop, when an answer may already be visible, and request corrections. Session command checks need a Claude Code transcript.",
   "author": {
     "name": "tsyyan",
     "url": "https://github.com/tsyyan"
@@ -12,12 +12,21 @@
   "homepage": "https://github.com/tsyyan/buddie",
   "repo": "https://github.com/tsyyan/buddie",
   "icon": "./icon.png",
-  "tags": ["software", "research"],
+  "tags": [
+    "software",
+    "research"
+  ],
   "license": "Apache-2.0",
   "verified": false,
   "featured": false,
   "install": {
-    "args": ["buddie", "--", "uvx", "buddie@2.0.1", "serve"],
+    "args": [
+      "buddie",
+      "--",
+      "uvx",
+      "buddie@2.0.5",
+      "serve"
+    ],
     "env": [
       {
         "name": "BUDDIE_GITHUB_TOKEN",
@@ -26,6 +35,6 @@
         "url": "https://github.com/settings/personal-access-tokens"
       }
     ],
-    "notes": "Requires uv and Python 3.11 or newer. The first start downloads the package; if Cline reports an initialize timeout on that first start, retry once (or run `uvx buddie@2.0.1 --version` beforehand). `snap` and `verify_report` fetch the URLs a report cites and write snapshots to ./.verbatim (or $VERBATIM_STORE). Privacy: https://github.com/tsyyan/buddie/blob/v2.0.1/PRIVACY.md"
+    "notes": "Requires uv and Python 3.11 or newer. The first start downloads the package; if Cline reports an initialize timeout on that first start, retry once (or run `uvx buddie@2.0.5 --version` beforehand). `snap` and `verify_report` fetch the URLs a report cites and write snapshots to ./.verbatim (or $VERBATIM_STORE). Privacy: https://github.com/tsyyan/buddie/blob/v2.0.5/PRIVACY.md"
   }
 }
